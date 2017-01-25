@@ -1,0 +1,1 @@
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -g -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/cs4760_OperatingSystems_Proj1.dir/main.c.o  -o cs4760_OperatingSystems_Proj1 
