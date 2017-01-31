@@ -3,5 +3,5 @@ project(cs4760_OperatingSystems_Proj1)
 
 set(CMAKE_C_STANDARD 99)
 
-set(SOURCE_FILES main.c)
+set(SOURCE_FILES main.c osProj1-log.h.h)
 add_executable(cs4760_OperatingSystems_Proj1 ${SOURCE_FILES})

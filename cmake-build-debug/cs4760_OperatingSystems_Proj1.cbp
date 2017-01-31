@@ -85,6 +85,9 @@
 		<Unit filename="/Users/Ryanpd423/Documents/Users/Ryanpd423/Documents/CLionCProjects/cs4760-OperatingSystems-Proj1/main.c">
 			<Option target="cs4760_OperatingSystems_Proj1"/>
 		</Unit>
+		<Unit filename="/Users/Ryanpd423/Documents/Users/Ryanpd423/Documents/CLionCProjects/cs4760-OperatingSystems-Proj1/osProj1-log.h.h">
+			<Option target="cs4760_OperatingSystems_Proj1"/>
+		</Unit>
 		<Unit filename="/Users/Ryanpd423/Documents/Users/Ryanpd423/Documents/CLionCProjects/cs4760-OperatingSystems-Proj1/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
