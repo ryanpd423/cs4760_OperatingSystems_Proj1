@@ -8,8 +8,8 @@
 #include <time.h>
 
 typedef struct data_struct {
-    time_t time;
-    char* string;
+    time_t time; //The time the message is logged
+    char* string;  //The logging message
 } data_t;
 
 int addmsg(data_t data);

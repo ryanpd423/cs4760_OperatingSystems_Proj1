@@ -9,4 +9,14 @@
 /Users/Ryanpd423/Documents/Users/Ryanpd423/Documents/CLionCProjects/cs4760-OperatingSystems-Proj1/main.c
 stdio.h
 -
+stdlib.h
+-
+string.h
+-
+osProj1-log.h.h
+/Users/Ryanpd423/Documents/Users/Ryanpd423/Documents/CLionCProjects/cs4760-OperatingSystems-Proj1/osProj1-log.h.h
+
+/Users/Ryanpd423/Documents/Users/Ryanpd423/Documents/CLionCProjects/cs4760-OperatingSystems-Proj1/osProj1-log.h.h
+time.h
+-
 
