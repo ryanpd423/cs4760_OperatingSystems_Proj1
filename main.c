@@ -112,28 +112,53 @@ int main(int argc, char* argv[]) {
 
     printf("Hello, World!\n"); //just for test output
 
-    int c; //create a capture variable to hold the return value of getopt()
 
-    while ( (c = getopt(argc, argv, "hnl")) != -1){
+    int c; //create a capture variable to hold the return value of getopt()
+    int x = 37; /*the default value for the command line parameter variable; if the -n
+    * if the -n x option flag is passed to the command line then the value of x will
+    */
+    char* logfileName = "logfile.txt"; //is this safe?; see nodesize var in addmsg() for example of safe dynamic memory allocation
+    /*
+     * the logfileName variable is initialized here to the default value of logfile.txt which will be used
+     * as the  name of the log file
+     */
+
+    while ( (c = getopt(argc, argv, "hn:l:")) != -1){
 
         switch(c) {
             case 'h':
+                printf("The '-h' flag describes the supported command line argument options.\n");
+                printf("The '-n x' flag describes is a command line parameter that will set a\nvariable in this main executable to the value specifed in place of the x symbol.\nFor example: if the command line argument is followed by '-n 13, then a corresponding\n variable in the program will be set to the value 13.\nIf this flag is not used then that corresponding variable described just previously will have a\ndefault value of 37.\n");
+                printf("The '-l filename' flag will set the name of the logfile to whatever is passed in place of 'filename.'\nIf this option is not passed from the command line then the default logfile name\nwill be logfile.txt.  Just insert the desired file name in place of filename\nin the '-l filename' option flag to set the logfile name as desired.\n");
                 break;
             case 'n':
+                x = atoi(optarg);
+                printf("The value of x is now %d inside the switch function\n", x); //testing only
+
                 break;
             case 'l':
+                logfileName = optarg;
+                printf("The value of the logfileName variable is now %s inside the switch function\n", logfileName); //testing only
                 break;
 
             case '?':
-                fprintf(stderr, "Unkown option -%c. \n", optopt);
+                if (optopt == 'n' || optopt == 'l') {
+                    fprintf(stderr, "Option -%c needs an argument\n", optopt);
+                }
+                else
+                    fprintf(stderr, "Unkown option -%c.\n", optopt);
 
                 break;
 
+                /*
             default:
-                perror("getopt");
+                //perror("getopt()"); will this function really be necessary; when could default actually occur
+                 */
 
         }
 
+        printf("The value of x is still %d inside of the main()\n", x); //testing only; '-n x' option flag
+        printf("The value of the logfileName variable is still %s inside of the main()\n", logfileName); //testing only; '-l filename' option flag
 
     }
 
