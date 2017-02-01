@@ -2,7 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
+#include <unistd.h>
 #include "osProj1-log.h.h"
+
+
 
 //Node structure
 typedef struct list_struct {
@@ -32,7 +35,7 @@ int addmsg(data_t data) {
      */
 
     /*
-     * This addmsg function will allocate node for data and add to end of list ~ aka ~ insert a message
+     * This addmsg function will allocate a node for data and add it to end of the queue ~ aka ~ insert a message
      * into the link list implemented queue
      */
 
@@ -103,9 +106,38 @@ int savelog(char* filename) {
     return 0;
 }
 
-int main() {
+
+
+int main(int argc, char* argv[]) {
 
     printf("Hello, World!\n"); //just for test output
+
+    int c; //create a capture variable to hold the return value of getopt()
+
+    while ( (c = getopt(argc, argv, "hnl")) != -1){
+
+        switch(c) {
+            case 'h':
+                break;
+            case 'n':
+                break;
+            case 'l':
+                break;
+
+            case '?':
+                fprintf(stderr, "Unkown option -%c. \n", optopt);
+
+                break;
+
+            default:
+                perror("getopt");
+
+        }
+
+
+    }
+
+
 
     /*
      * The logging utility allows the caller to save
@@ -116,9 +148,10 @@ int main() {
     //printf("size of log_t struct object = %lu bytes\n", sizeof(log_t)); //test data this can be deleted
 
     /*Error handling for the addmsg function
-    if (addmsg(data_t data) == -1 && )
+    if (addmsg(data_t data) == -1)
         perror("Failed to add another log message (node) to our linked list implemented logging utility queue");
     */
+
 
 
     return 0;
