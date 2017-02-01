@@ -18,4 +18,5 @@ char* getlog(void);
 int savelog(char* filename);
 
 
+
 #endif //CS4760_OPERATINGSYSTEMS_PROJ1_OSPROJ1_LOG_H_H

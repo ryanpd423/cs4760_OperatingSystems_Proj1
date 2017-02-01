@@ -4,6 +4,8 @@
 #include <errno.h>
 #include <unistd.h>
 #include "osProj1-log.h.h"
+#include <math.h>
+
 
 
 
@@ -16,6 +18,8 @@ typedef struct list_struct {
 
 static log_t* headptr = NULL; //front ptr; points to the first inserted node in the queue
 static log_t* tailptr = NULL; //rear ptr; points to the last inserted node in the queue
+
+
 
 int addmsg(data_t data) {
 
@@ -112,6 +116,10 @@ int main(int argc, char* argv[]) {
 
     printf("Hello, World!\n"); //just for test output
 
+   /*
+    * log messages created below this getopt code
+    */
+
 
     int c; //create a capture variable to hold the return value of getopt()
     int x = 37; /*the default value for the command line parameter variable; if the -n
@@ -121,7 +129,9 @@ int main(int argc, char* argv[]) {
     /*
      * the logfileName variable is initialized here to the default value of logfile.txt which will be used
      * as the  name of the log file
+     *
      */
+
 
     while ( (c = getopt(argc, argv, "hn:l:")) != -1){
 
@@ -154,14 +164,11 @@ int main(int argc, char* argv[]) {
             default:
                 //perror("getopt()"); will this function really be necessary; when could default actually occur
                  */
-
         }
-
-        printf("The value of x is still %d inside of the main()\n", x); //testing only; '-n x' option flag
-        printf("The value of the logfileName variable is still %s inside of the main()\n", logfileName); //testing only; '-l filename' option flag
-
     }
 
+    printf("The value of x is still %d inside of the main()\n", x); //testing only; '-n x' option flag
+    printf("The value of the logfileName variable is still %s inside of the main()\n", logfileName); //testing only; '-l filename' option flag
 
 
     /*
@@ -170,13 +177,40 @@ int main(int argc, char* argv[]) {
      * The logger also records the time that the message was logged
     */
 
-    //printf("size of log_t struct object = %lu bytes\n", sizeof(log_t)); //test data this can be deleted
+    /*
+    * create a new data_t object (item is the data_t object reference variable member in node structure object)
+    * each time the program is run...then these messages (in the form of data_t objects)
+    * will get sent to a file (whose name is logfile.txt by default
+    * but can be changed by the '-l filename' flag)
+    *
+    * this data_t object (log message) will be sent to the savelog(function)
+    *
+    * the logfileName variable will be sent to the save log function but only once? not sure how I can get this value to persis across multiple program runs...
+    *
+    *
+    *
+   */
+    data_t newMessage; //new log message object; this will eventually be passed to the addmsg() function
+    newMessage.string = "log message string";
+    time(&newMessage.time); //initialize the .time member variable of log message data_t type structure object
+    printf("time in seconds = %ld\n", newMessage.time);
+    //time_t timeInSeconds;  >>>>> can't figure out how to convert seconds to nanoseconds
+    //time(&timeInSeconds); //this needs error handling (use that ISO C standard site; bookmarked on Safari)  >>>>> can't figure out how to convert seconds to nanoseconds
+    //int time = pow(timeInSeconds,-9); >>>>> can't figure out how to convert seconds to nanoseconds
+    //newMessage.time = time;  >>>>> can't figure out how to convert seconds to nanoseconds
+    //printf("time in nanoseconds = %ld\n",newMessage.time);  >>>>> can't figure out how to convert seconds to nanoseconds
+    //*testing*//
+    printf("data_t object test:  newMessage.string = %s\n", newMessage.string); //testing creation of a log message
+    printf("data_t object test:  newMessage.time = %ld\n", newMessage.time); //testing creation of a log message
+    //*testing*//
 
-    /*Error handling for the addmsg function
-    if (addmsg(data_t data) == -1)
+
+    /*
+     * call the addmsg() function and pass newly created log message data_t-type object struct into it as argument
+     * so it can be added to a log_t queue linked list node as the data_t item member
+     */
+    if (addmsg(newMessage) == -1)
         perror("Failed to add another log message (node) to our linked list implemented logging utility queue");
-    */
-
 
 
     return 0;
