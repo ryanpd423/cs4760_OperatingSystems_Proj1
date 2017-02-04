@@ -7,8 +7,6 @@
 #include <math.h>
 
 
-
-
 //Node structure
 typedef struct list_struct {
     data_t item; //holds our message object
@@ -18,7 +16,8 @@ typedef struct list_struct {
 
 static log_t* headptr = NULL; //front ptr; points to the first inserted node in the queue
 static log_t* tailptr = NULL; //rear ptr; points to the last inserted node in the queue
-
+static int n_flag = 0;
+static int l_flag = 0;
 
 
 int addmsg(data_t data) {
@@ -31,21 +30,6 @@ int addmsg(data_t data) {
      * Sets errno on failure
      */
 
-    /*
-     * The addmsg function inserts a copy of the data_t-type data item (log message)
-     * at the end of the list.
-     *
-     * The addmsg function appends to its internal list structure a node containing a copy of the data
-     */
-
-    /*
-     * This addmsg function will allocate a node for data and add it to end of the queue ~ aka ~ insert a message
-     * into the linked list implemented queue
-     */
-
-    /*
-     * a majority of the below code for addmsg is from page 44-45 in UNIX Systems Programming
-     */
     log_t* newNode;
     size_t nodesize;
 
@@ -53,29 +37,12 @@ int addmsg(data_t data) {
     if ((newNode = (log_t*)(malloc(nodesize))) == NULL) {
         perror("Memory request is unable to be made.\n");
         return(-1);
-    } /*could not add a new node */
-
-
-    /*test
-    size_t size = sizeof(newNode);
-    printf("%d\n", size);
-     test*/
+    } /*could not add a new node - - - no more memory available when malloc() returns NULL */
 
     newNode->item.time = data.time;
-    /*
- * to access the members of a structure using a pointer to that structure, you must use the -> operator as follows:
- * struct_pointer->title; //where title is a member of the struct_pointer object definition and struct_pointer is
- * a struct_pointer-object-type pointer (meaning struct_pointer could hold the address of a struct_pointer type object)
- */
 
     //confused by this code: (but it's on page 44 so we are gonna stick with it)
     newNode->item.string = (char*)newNode + sizeof(log_t); //why not just newNode->item.string = (char*)(malloc(sizeof(char)) * (strlen(item.string) + 1));
-    //test ~ delete eventually
-    //size_t size = sizeof((char*)newNode);
-    //printf("%d\n", size);
-    //size_t size2 = sizeof(log_t);
-    //printf("%d\n", size2);
-    //test
     strcpy(newNode->item.string, data.string);
     newNode->next = NULL; //cap your pointers before you use them
     if(headptr == NULL)
@@ -130,16 +97,12 @@ int main(int argc, char* argv[]) {
     printf("Hello, World!\n"); //just for test output
 
     int c; //create a capture variable to hold the return value of getopt()
-    int x = 42; /*the default value for the command line parameter variable
-    */
+    int x = 42; //the default value for the command line parameter variable
     char* logfileName = "logfile.txt"; //is this safe?; see nodesize var in addmsg() for example of safe dynamic memory allocation
     /*
      * the logfileName variable is initialized here to the default value of logfile.txt which will be used
      * as the  name of the log file
-     *
      */
-
-
 
     while ( (c = getopt(argc, argv, "hn:l:")) != -1){
 
@@ -152,11 +115,12 @@ int main(int argc, char* argv[]) {
             case 'n':
                 x = atoi(optarg);
                 printf("The value of x is now %d inside the switch function\n", x); //testing only
-
+                n_flag = 1;
                 break;
             case 'l':
                 logfileName = optarg;
                 printf("The value of the logfileName variable is now %s inside the switch function\n", logfileName); //testing only
+                l_flag = 1;
                 break;
 
             case '?':
@@ -171,37 +135,56 @@ int main(int argc, char* argv[]) {
         }
     printf("The value of x is still %d inside of the main()\n", x); //testing only; '-n x' option flag
     printf("The value of the logfileName variable is still %s inside of the main()\n", logfileName); //testing only; '-l filename' option flag
-    /*
-     * The logging utility allows the caller to save
-     * a message at the end of a list (a queue that takes an array of char* pointers).
-     * The logger also records the time that the message was logged
-    */
 
-    /*
-    * create a new data_t object (item is the data_t object reference variable member in node structure object)
-    * each time the program is run...then these messages (in the form of data_t objects)
-    * will get sent to a file (whose name is logfile.txt by default
-    * but can be changed by the '-l filename' flag)
-    *
-    * this data_t object (log message) will be sent to the savelog(function)
-    *
-    * the logfileName variable will be sent to the save log function but only once? not sure how I can get this value to persis across multiple program runs...
-    *
-    *
-    *
-   */
+//LOG OBJECT AND STRING OUTPUT MESSAGE
     data_t newMessage; //new log message object; this will eventually be passed to the addmsg() function
-    newMessage.string = "log message string";
     time(&newMessage.time); //initialize the .time member variable of log message data_t type structure object
     printf("time in seconds = %ld\n", newMessage.time);//test data
-    //time_t timeInSeconds;  >>>>> can't figure out how to convert seconds to nanoseconds
-    //time(&timeInSeconds); //this needs error handling (use that ISO C standard site; bookmarked on Safari)  >>>>> can't figure out how to convert seconds to nanoseconds
-    //get_time ?
+
+
+
+
+    /*
+    //log string message builder
+    //can I just use sprintf()????
+    char* firstPartOfMessage = strcat("./", argv[0]);
+    char* secondPartOfMessage = strcat(firstPartOfMessage, ": time: ");
+    char* thirdPartOfMessage = strcat(secondPartOfMessage, timeDisplay);
+    char* fourthPartOfMessage = strcat(thirdPartOfMessage, "Error: ");
+    char* fifthPartOfMessage = strcat(fourthPartOfMessage, "-n flag is not used and -l flag is not used...x remains equal to 42 and logfile.txt is the log file name still\n");
+    if (n_flag == 1 && l_flag == 1) {
+        char* fifthPartOfMessage = strcat(fourthPartOfMessage, "-n flag changed x param (x no longer equals 42) and -l flag changed logfile name (logfile is no longer called logfile.txt)\n");
+    }
+    else if (n_flag == 1 && l_flag == 0) {
+        char* fifthPartOfMessage = strcat(fourthPartOfMessage, "-n flag changed x param (x no longer equals 42)\n");
+    }
+    else if (n_flag == 0 && l_flag == 1) {
+        char* fifthPartOfMessage = strcat(fourthPartOfMessage, "-l flag changed logfile name (logfile is no longer called logfile.txt)\n");
+    }
+    newMessage.string = fifthPartOfMessage;
+    */
+
+    if (n_flag == 0 && l_flag == 0){
+        printf("%s: time:%ld Error: -n flag not used (x param remains equal to 42); -l flag not used (log file = logfile.txt)\n", argv[0], newMessage.time);
+    }
+    else if (n_flag == 1 && l_flag == 1){
+        printf("%s: time:%ld Error: -n flag changes the value x param to %d and -l flag changes log file name to %s\n", argv[0], newMessage.time, x, logfileName);
+    }
+    else if (n_flag == 0 && l_flag == 1){
+        printf("%s: time:%ld Error: -n flag not used; -l flag changes log file name to %s\n", argv[0], newMessage.time, logfileName);
+    }
+    else if (n_flag == 1 && l_flag == 0){
+        printf("%s: time:%ld Error: -n flag changes the value x param to %d; -l flag not used (log file = logfile.txt)\n", argv[0], newMessage.time, x);
+    }
+
+
+    newMessage.string = "I am not sure how to move the printf() log messages from above into this item.string pointer...";
+
+
     //*testing*//
     printf("data_t object test:  newMessage.string = %s\n", newMessage.string); //testing creation of a log message
     printf("data_t object test:  newMessage.time = %ld\n", newMessage.time); //testing creation of a log message
     //*testing*//
-
 
 
     /*
@@ -213,6 +196,9 @@ int main(int argc, char* argv[]) {
         perror("Memory request is unable to be made.\n");
         exit(1);
     }
+
+
+
 
 
     return 0;
