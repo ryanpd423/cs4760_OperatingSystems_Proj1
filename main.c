@@ -11,8 +11,8 @@
 
 //Node structure
 typedef struct list_struct {
-    data_t item;
-    struct list_struct* next;
+    data_t item; //holds our message object
+    struct list_struct* next; //points to the next node (list_struct / log_t) in our linked-list implemented queue
 } log_t;
 
 
@@ -40,32 +40,48 @@ int addmsg(data_t data) {
 
     /*
      * This addmsg function will allocate a node for data and add it to end of the queue ~ aka ~ insert a message
-     * into the link list implemented queue
+     * into the linked list implemented queue
      */
 
     /*
      * a majority of the below code for addmsg is from page 44-45 in UNIX Systems Programming
      */
     log_t* newNode;
-    int nodesize;
+    size_t nodesize;
 
-    nodesize = sizeof(log_t) + strlen(data.string) + 1; //+1 for the null terminator
-    if ((newNode = (log_t*) (malloc(nodesize))) == NULL) /*could not add a new node */
-        return -1; //see error handling in main method at addmsg() function call
+    nodesize = sizeof(log_t) + strlen(data.string) + 1; //+1 for the null terminator in the data_t object's char* string pointer member variable
+    if ((newNode = (log_t*)(malloc(nodesize))) == NULL) {
+        perror("Memory request is unable to be made.\n");
+        return(-1);
+    } /*could not add a new node */
 
-    newNode->item.time = data.time;/*
+
+    /*test
+    size_t size = sizeof(newNode);
+    printf("%d\n", size);
+     test*/
+
+    newNode->item.time = data.time;
+    /*
  * to access the members of a structure using a pointer to that structure, you must use the -> operator as follows:
  * struct_pointer->title; //where title is a member of the struct_pointer object definition and struct_pointer is
  * a struct_pointer-object-type pointer (meaning struct_pointer could hold the address of a struct_pointer type object)
  */
-    newNode->item.string = (char*)newNode + sizeof(log_t); //not sure what this is code is accomplishing; I think it is trying to copy the string value from the log message object (data_t item argument) into the newNode copied version of the log message's data_t item argument
-    //why not just newNode->item.string = (char*) (malloc(sizeof(char)) * (strlen(item.string) + 1));
+
+    //confused by this code: (but it's on page 44 so we are gonna stick with it)
+    newNode->item.string = (char*)newNode + sizeof(log_t); //why not just newNode->item.string = (char*)(malloc(sizeof(char)) * (strlen(item.string) + 1));
+    //test ~ delete eventually
+    //size_t size = sizeof((char*)newNode);
+    //printf("%d\n", size);
+    //size_t size2 = sizeof(log_t);
+    //printf("%d\n", size2);
+    //test
     strcpy(newNode->item.string, data.string);
-    newNode->next = NULL;
+    newNode->next = NULL; //cap your pointers before you use them
     if(headptr == NULL)
-        headptr = newNode;
+        headptr = newNode; //
     else
-        tailptr->next = newNode; //tailptr = rear ptr; this is the last node is the queue's pointer; it points to the "new" last inserted node in the queue
+        tailptr->next = newNode; //tailptr = rear ptr; it points to the "new" last inserted node in the queue
     tailptr = newNode; //the address of the newNode now becomes the address of the tailPtr because it is the "newly" last node in this linked list implemented queue
     return 0;
 }
@@ -95,7 +111,6 @@ char* getlog(void) {
     return NULL;
 }
 
-
 int savelog(char* filename) {
 /*
  * saves the logged messages to a disk file
@@ -110,20 +125,12 @@ int savelog(char* filename) {
     return 0;
 }
 
-
-
 int main(int argc, char* argv[]) {
 
     printf("Hello, World!\n"); //just for test output
 
-   /*
-    * log messages created below this getopt code
-    */
-
-
     int c; //create a capture variable to hold the return value of getopt()
-    int x = 37; /*the default value for the command line parameter variable; if the -n
-    * if the -n x option flag is passed to the command line then the value of x will
+    int x = 42; /*the default value for the command line parameter variable
     */
     char* logfileName = "logfile.txt"; //is this safe?; see nodesize var in addmsg() for example of safe dynamic memory allocation
     /*
@@ -131,6 +138,7 @@ int main(int argc, char* argv[]) {
      * as the  name of the log file
      *
      */
+
 
 
     while ( (c = getopt(argc, argv, "hn:l:")) != -1){
@@ -153,24 +161,16 @@ int main(int argc, char* argv[]) {
 
             case '?':
                 if (optopt == 'n' || optopt == 'l') {
-                    fprintf(stderr, "Option -%c needs an argument\n", optopt);
+                    fprintf(stderr, "Option -%c needs an argument\n", optopt); //should/can this be perror()
                 }
                 else
-                    fprintf(stderr, "Unkown option -%c.\n", optopt);
+                    fprintf(stderr, "Unkown option -%c.\n", optopt); //should/can this be perror()
 
                 break;
-
-                /*
-            default:
-                //perror("getopt()"); will this function really be necessary; when could default actually occur
-                 */
+            }
         }
-    }
-
     printf("The value of x is still %d inside of the main()\n", x); //testing only; '-n x' option flag
     printf("The value of the logfileName variable is still %s inside of the main()\n", logfileName); //testing only; '-l filename' option flag
-
-
     /*
      * The logging utility allows the caller to save
      * a message at the end of a list (a queue that takes an array of char* pointers).
@@ -193,24 +193,26 @@ int main(int argc, char* argv[]) {
     data_t newMessage; //new log message object; this will eventually be passed to the addmsg() function
     newMessage.string = "log message string";
     time(&newMessage.time); //initialize the .time member variable of log message data_t type structure object
-    printf("time in seconds = %ld\n", newMessage.time);
+    printf("time in seconds = %ld\n", newMessage.time);//test data
     //time_t timeInSeconds;  >>>>> can't figure out how to convert seconds to nanoseconds
     //time(&timeInSeconds); //this needs error handling (use that ISO C standard site; bookmarked on Safari)  >>>>> can't figure out how to convert seconds to nanoseconds
-    //int time = pow(timeInSeconds,-9); >>>>> can't figure out how to convert seconds to nanoseconds
-    //newMessage.time = time;  >>>>> can't figure out how to convert seconds to nanoseconds
-    //printf("time in nanoseconds = %ld\n",newMessage.time);  >>>>> can't figure out how to convert seconds to nanoseconds
+    //get_time ?
     //*testing*//
     printf("data_t object test:  newMessage.string = %s\n", newMessage.string); //testing creation of a log message
     printf("data_t object test:  newMessage.time = %ld\n", newMessage.time); //testing creation of a log message
     //*testing*//
 
 
+
     /*
      * call the addmsg() function and pass newly created log message data_t-type object struct into it as argument
      * so it can be added to a log_t queue linked list node as the data_t item member
      */
-    if (addmsg(newMessage) == -1)
-        perror("Failed to add another log message (node) to our linked list implemented logging utility queue");
+
+    if (addmsg(newMessage) == -1) {
+        perror("Memory request is unable to be made.\n");
+        exit(1);
+    }
 
 
     return 0;
