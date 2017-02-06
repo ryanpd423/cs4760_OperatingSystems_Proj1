@@ -1,0 +1,8 @@
+I am not sure how to move the printf() log messages from above into this item.string pointer.#1..
+I am not sure how to move the printf() log messages from above into this item.string pointer...#2..
+I am not sure how to move the printf() log messages from above into this item.string pointer...#3..
+
+I am not sure how to move the printf() log messages from above into this item.string pointer.#1..
+I am not sure how to move the printf() log messages from above into this item.string pointer...#2..
+I am not sure how to move the printf() log messages from above into this item.string pointer...#3..
+

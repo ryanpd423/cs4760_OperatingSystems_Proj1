@@ -58,7 +58,16 @@ void clearlog(void) {
  * Releases all the storage that has been allocated for the logged messages
  * and empties the list of logged messages
  */
+    log_t* logMessages = headptr;
 
+    static int count = 0;
+
+    while (logMessages != NULL){
+        logMessages = logMessages->next;
+        free(logMessages);
+        count++;
+        printf("realease mem%d\n", count);
+    }
 }
 
 char* getlog(void) {
@@ -75,7 +84,32 @@ char* getlog(void) {
  * Sets errno on failure
  */
 
-    return NULL;
+    static char* entireLog = NULL;
+    static int counter = 0;
+
+    //This is the first log messsage
+    entireLog = (char*) malloc(sizeof(headptr->item.string)+1);
+
+    printf("size of entire log before realloc = %lu \n", sizeof(entireLog));
+
+
+    log_t* nextNode = headptr;
+
+        //right now realloc() doesn't work so we are using entireLog = realloc(entireLog, 10000); in the hoare.cs.umsl.edu file
+        while (nextNode != NULL) {
+            entireLog = realloc(entireLog, sizeof(nextNode->item.string)+1);
+            strncat(entireLog,nextNode->item.string, strlen(nextNode->item.string)); //adding + 1 doesnt fix this error
+            counter++;
+
+            nextNode = nextNode->next;
+            printf("\ntest new nodes %d\n", counter);
+        }
+
+    printf("size of entire log after realloc = %lu \n", sizeof(entireLog));
+
+    return entireLog;
+
+    //unsuccessful getlog function returns NULL
 }
 
 int savelog(char* filename) {
@@ -89,12 +123,23 @@ int savelog(char* filename) {
  * Sets errno on failure
  */
 
+    FILE* fp = fopen(filename, "a");
+    if (fp == NULL){
+        return -1;
+    }
+
+    char* obtainLog = getlog();
+    fprintf(fp, "%s\n", obtainLog);
+    fclose(fp);
+
     return 0;
 }
 
 int main(int argc, char* argv[]) {
 
     printf("Hello, World!\n"); //just for test output
+    printf("%d\n",argc);
+    printf("%s\n",argv[1]);
 
     int c; //create a capture variable to hold the return value of getopt()
     int x = 42; //the default value for the command line parameter variable
@@ -142,28 +187,6 @@ int main(int argc, char* argv[]) {
     printf("time in seconds = %ld\n", newMessage.time);//test data
 
 
-
-
-    /*
-    //log string message builder
-    //can I just use sprintf()????
-    char* firstPartOfMessage = strcat("./", argv[0]);
-    char* secondPartOfMessage = strcat(firstPartOfMessage, ": time: ");
-    char* thirdPartOfMessage = strcat(secondPartOfMessage, timeDisplay);
-    char* fourthPartOfMessage = strcat(thirdPartOfMessage, "Error: ");
-    char* fifthPartOfMessage = strcat(fourthPartOfMessage, "-n flag is not used and -l flag is not used...x remains equal to 42 and logfile.txt is the log file name still\n");
-    if (n_flag == 1 && l_flag == 1) {
-        char* fifthPartOfMessage = strcat(fourthPartOfMessage, "-n flag changed x param (x no longer equals 42) and -l flag changed logfile name (logfile is no longer called logfile.txt)\n");
-    }
-    else if (n_flag == 1 && l_flag == 0) {
-        char* fifthPartOfMessage = strcat(fourthPartOfMessage, "-n flag changed x param (x no longer equals 42)\n");
-    }
-    else if (n_flag == 0 && l_flag == 1) {
-        char* fifthPartOfMessage = strcat(fourthPartOfMessage, "-l flag changed logfile name (logfile is no longer called logfile.txt)\n");
-    }
-    newMessage.string = fifthPartOfMessage;
-    */
-
     if (n_flag == 0 && l_flag == 0){
         printf("%s: time:%ld Error: -n flag not used (x param remains equal to 42); -l flag not used (log file = logfile.txt)\n", argv[0], newMessage.time);
     }
@@ -177,15 +200,12 @@ int main(int argc, char* argv[]) {
         printf("%s: time:%ld Error: -n flag changes the value x param to %d; -l flag not used (log file = logfile.txt)\n", argv[0], newMessage.time, x);
     }
 
-
-    newMessage.string = "I am not sure how to move the printf() log messages from above into this item.string pointer...";
-
+    newMessage.string = "I am not sure how to move the printf() log messages from above into this item.string pointer.#1..\n";
 
     //*testing*//
     printf("data_t object test:  newMessage.string = %s\n", newMessage.string); //testing creation of a log message
     printf("data_t object test:  newMessage.time = %ld\n", newMessage.time); //testing creation of a log message
     //*testing*//
-
 
     /*
      * call the addmsg() function and pass newly created log message data_t-type object struct into it as argument
@@ -198,8 +218,56 @@ int main(int argc, char* argv[]) {
     }
 
 
+    //LOG OBJECT AND STRING OUTPUT MESSAGE
+    data_t newMessage2; //new log message object; this will eventually be passed to the addmsg() function
+    time(&newMessage2.time); //initialize the .time member variable of log message data_t type structure object
+    printf("time in seconds = %ld\n", newMessage2.time);//test data
 
 
+    newMessage2.string = "I am not sure how to move the printf() log messages from above into this item.string pointer...#2..\n";
 
+    //*testing*//
+    printf("data_t object test:  newMessage.string = %s\n", newMessage2.string); //testing creation of a log message
+    printf("data_t object test:  newMessage.time = %ld\n", newMessage2.time); //testing creation of a log message
+    //*testing*//
+
+
+    if (addmsg(newMessage2) == -1) {
+        perror("Memory request is unable to be made.\n");
+        exit(1);
+    }
+
+
+    //LOG OBJECT AND STRING OUTPUT MESSAGE
+    data_t newMessage3; //new log message object; this will eventually be passed to the addmsg() function
+    time(&newMessage3.time); //initialize the .time member variable of log message data_t type structure object
+    printf("time in seconds = %ld\n", newMessage3.time);//test data
+
+
+    newMessage3.string = "I am not sure how to move the printf() log messages from above into this item.string pointer...#3..\n";
+
+    //*testing*//
+    printf("data_t object test:  newMessage.string = %s\n", newMessage3.string); //testing creation of a log message
+    printf("data_t object test:  newMessage.time = %ld\n", newMessage3.time); //testing creation of a log message
+    //*testing*//
+
+
+    if (addmsg(newMessage3) == -1) {
+        perror("Memory request is unable to be made.\n");
+        exit(1);
+    }
+
+    printf("\nbreakpoint\n");
+
+    //testing getlog()
+    char* printLog = getlog();
+    printf("%s\n", printLog);
+    printf("size of printlog = %lu\n", sizeof(printLog));
+
+    savelog(logfileName);
+
+    clearlog();
+
+    //you have to run this program from the command line because of the argv[0] being passed to printf()
     return 0;
 }
