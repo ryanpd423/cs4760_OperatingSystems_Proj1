@@ -13,14 +13,72 @@ typedef struct list_struct {
     struct list_struct* next; //points to the next node (list_struct / log_t) in our linked-list implemented queue
 } log_t;
 
-
 static log_t* headptr = NULL; //front ptr; points to the first inserted node in the queue
 static log_t* tailptr = NULL; //rear ptr; points to the last inserted node in the queue
+static int h_flag = 0;
 static int n_flag = 0;
 static int l_flag = 0;
+static int x = 42;
+static char* logfileName = "logfile.txt";
+static char* hFlagString = "describes the supported command line argument options.\nThe '-n' flag can change a param, x, from 42 to any val.\nThe '-l' flag can change the name of the log file from logfile.txt to any custom string\n";
+static int dataStringEnum = 0;
+
+char* msgTemplate(){
+
+    char* returningMsgTemplate;
+
+    if (n_flag == 0 && l_flag == 0 && h_flag == 0){
+        char *hMessageTemplate = "\n%s: Time:%lu Error:%s\n";
+        dataStringEnum = 1;
+        returningMsgTemplate = hMessageTemplate;
+    }
+    else if (n_flag == 1 && l_flag == 0 && h_flag == 0){
+        char* nMessageTemplate = "\n%s: Time:%lu Error:%s - - x changed to %d\n";
+        dataStringEnum = 2;
+        returningMsgTemplate = nMessageTemplate;
+    }
+    else if (n_flag == 1 && l_flag == 1 && h_flag == 0){
+        char* nAndlMessageTemplate = "\n%s: Time:%lu Error:%s - - x changed to %d and logfile.txt name changed to %s\n";
+        dataStringEnum = 3;
+        returningMsgTemplate = nAndlMessageTemplate;
+    }
+    else if (n_flag == 1 && l_flag == 1 && h_flag == 1){
+        char* nAndlAndhMessageTemplate = "\n%s: Time:%lu Error:%s - - x changed to %d and logfile.txt name changed to %s...the -h flag: %s\n";
+        dataStringEnum = 4;
+        returningMsgTemplate = nAndlAndhMessageTemplate;
+    }
+    else if (n_flag == 0 && l_flag == 1 && h_flag == 0){
+        char* lMessageTemplate = "\n%s: Time:%lu Error:%s - - logfile.txt name changed to %s\n";
+        dataStringEnum = 5;
+        returningMsgTemplate = lMessageTemplate;
+    }
+    else if (n_flag == 0 && l_flag == 1 && h_flag == 1){
+        char* lAndhMessageTemplate = "\n%s: Time:%lu Error:%s - - logfile.txt name changed to %s...the -h flag: %s\n";
+        dataStringEnum = 6;
+        returningMsgTemplate = lAndhMessageTemplate;
+    }
+    else if (n_flag == 0 && l_flag == 0 && h_flag == 1){
+        char* hMessageTemplate = "\n%s: Time:%lu Error:%s...the -h flag: %s\n";
+        dataStringEnum = 7;
+        returningMsgTemplate = hMessageTemplate;
+    }
+    else if (n_flag == 1 && l_flag == 0 && h_flag == 1){
+        char* nAndhMessageTemplate = "\n%s: Time:%lu Error:%s - - x changed to %d...the -h flag: %s\n";
+        dataStringEnum = 8;
+        returningMsgTemplate = nAndhMessageTemplate;
+    }
+
+    return returningMsgTemplate;
+}
+
+data_t createLogMessageForNode(){
+
+    data_t newLogMessage; //create a new Log Message(data_t) object for the node(log_t) in the queued linked-list
+    return newLogMessage;
+}
 
 
-int addmsg(data_t data) {
+int addmsg(data_t data, char* argv0) {
 
     /*
      * If successful, addmsg will return 0.
@@ -32,18 +90,53 @@ int addmsg(data_t data) {
 
     log_t* newNode;
     size_t nodesize;
+    char* messageTemplate = msgTemplate();
+    time(&data.time); //initialize the .time member variable of log message data_t type structure object
 
-    nodesize = sizeof(log_t) + strlen(data.string) + 1; //+1 for the null terminator in the data_t object's char* string pointer member variable
-    if ((newNode = (log_t*)(malloc(nodesize))) == NULL) {
+    if (dataStringEnum == 1){
+        data.string = "c'mon atleast throw a flag";
+    }
+    else if (dataStringEnum == 2){
+        data.string = "- - Dothraki Horde!";
+    }
+    else if (dataStringEnum == 3){
+        data.string = " - - House Lannister!";
+    }
+    else if (dataStringEnum == 4){
+        data.string = "- - House Stark!";
+    }
+    else if (dataStringEnum == 5){
+        data.string = " - - The King in the North!";
+    }
+    else if (dataStringEnum == 6){
+        data.string =  "- - House Stark!";
+    }
+    else if (dataStringEnum == 7){
+        data.string = "- - House Greyjoy!";
+    }
+    else if (dataStringEnum == 8){
+        data.string = " - - Burn in hell Ramsey Bolton...Winter is Coming!";
+    }
+
+    /*
+     * snprintf is a little bit of a hack; you have to pass it data.string as its fourth argument or it doesn't work for some reason
+     * I honestly just started guessing and testing and it worked...need an explanation why though...
+     */
+    //get message size
+    int logStringSize = snprintf(NULL, 0, messageTemplate, data.string, data.time, argv0, x, logfileName, hFlagString); //measures the logString
+    printf("size of logString is %d\n", logStringSize);//test logString size
+
+    //include the size of the node + the logString + the null terminator
+    nodesize = sizeof(log_t) + logStringSize + 1; //the +1 accounts for the NULL Terminator \0 at the end of the char*/char[]
+    if ((newNode = (log_t *) (malloc(nodesize))) == NULL) {
         perror("Memory request is unable to be made.\n");
-        return(-1);
-    } /*could not add a new node - - - no more memory available when malloc() returns NULL */
+        return (-1);
+    }
 
     newNode->item.time = data.time;
-
-    //confused by this code: (but it's on page 44 so we are gonna stick with it)
-    newNode->item.string = (char*)newNode + sizeof(log_t); //why not just newNode->item.string = (char*)(malloc(sizeof(char)) * (strlen(item.string) + 1));
-    strcpy(newNode->item.string, data.string);
+    newNode->item.string = (char*) (newNode+1); //newNode + 1 is pointer arithmetic that casts the additional allocated memory past the initial amount of the contiguous log_t-sized memory block to the newNode->item.string variable logMessage string that needs memory right after that log_t block of memory (ex: think log_t is from mem-cell 100 to mem-cell 150, and the memory calculated from the snprintf (int logString) needs mem-cell 151 to ?...to get to mem-cell 151 from mem-cell 100 we need to perform pointer arithmetic and traverse the heap memory block by the amount of log_t so we can go from mem-cell 100 to mem-cell 151 and that portion can now start reading in data from newNode->item.string...then we have to recast it as char* memory (from log_t* memory)
+    newNode->next = NULL; //cap the log_t* next pointer to point to location NULL/0 for now...it's not being used here anyways...at least not until getlog() is called
+    snprintf(newNode->item.string,logStringSize, messageTemplate, argv0, data.time, data.string, x, logfileName, hFlagString);
     newNode->next = NULL; //cap your pointers before you use them
     if(headptr == NULL)
         headptr = newNode; //
@@ -91,7 +184,6 @@ char* getlog(void) {
     entireLog = (char*) malloc(sizeof(headptr->item.string)+1);
 
     printf("size of entire log before realloc = %lu \n", sizeof(entireLog));
-
 
     log_t* nextNode = headptr;
 
@@ -142,8 +234,8 @@ int main(int argc, char* argv[]) {
     printf("%s\n",argv[1]);
 
     int c; //create a capture variable to hold the return value of getopt()
-    int x = 42; //the default value for the command line parameter variable
-    char* logfileName = "logfile.txt"; //is this safe?; see nodesize var in addmsg() for example of safe dynamic memory allocation
+    //int x = 42; //the default value for the command line parameter variable
+    //char* logfileName = "logfile.txt"; //is this safe?; see nodesize var in addmsg() for example of safe dynamic memory allocation
     /*
      * the logfileName variable is initialized here to the default value of logfile.txt which will be used
      * as the  name of the log file
@@ -153,18 +245,14 @@ int main(int argc, char* argv[]) {
 
         switch(c) {
             case 'h':
-                printf("The '-h' flag describes the supported command line argument options.\n");
-                printf("The '-n x' flag describes is a command line parameter that will set a\nvariable in this main executable to the value specifed in place of the x symbol.\nFor example: if the command line argument is followed by '-n 13, then a corresponding\n variable in the program will be set to the value 13.\nIf this flag is not used then that corresponding variable described just previously will have a\ndefault value of 37.\n");
-                printf("The '-l filename' flag will set the name of the logfile to whatever is passed in place of 'filename.'\nIf this option is not passed from the command line then the default logfile name\nwill be logfile.txt.  Just insert the desired file name in place of filename\nin the '-l filename' option flag to set the logfile name as desired.\n");
+                h_flag = 1;
                 break;
             case 'n':
                 x = atoi(optarg);
-                printf("The value of x is now %d inside the switch function\n", x); //testing only
                 n_flag = 1;
                 break;
             case 'l':
                 logfileName = optarg;
-                printf("The value of the logfileName variable is now %s inside the switch function\n", logfileName); //testing only
                 l_flag = 1;
                 break;
 
@@ -178,15 +266,16 @@ int main(int argc, char* argv[]) {
                 break;
             }
         }
-    printf("The value of x is still %d inside of the main()\n", x); //testing only; '-n x' option flag
-    printf("The value of the logfileName variable is still %s inside of the main()\n", logfileName); //testing only; '-l filename' option flag
 
+/*
 //LOG OBJECT AND STRING OUTPUT MESSAGE
     data_t newMessage; //new log message object; this will eventually be passed to the addmsg() function
     time(&newMessage.time); //initialize the .time member variable of log message data_t type structure object
     printf("time in seconds = %ld\n", newMessage.time);//test data
+    newMessage.string = "testing data.string via log_t's item.string\n";
+*/
 
-
+/*
     if (n_flag == 0 && l_flag == 0){
         printf("%s: time:%ld Error: -n flag not used (x param remains equal to 42); -l flag not used (log file = logfile.txt)\n", argv[0], newMessage.time);
     }
@@ -199,63 +288,40 @@ int main(int argc, char* argv[]) {
     else if (n_flag == 1 && l_flag == 0){
         printf("%s: time:%ld Error: -n flag changes the value x param to %d; -l flag not used (log file = logfile.txt)\n", argv[0], newMessage.time, x);
     }
+*/
 
-    newMessage.string = "I am not sure how to move the printf() log messages from above into this item.string pointer.#1..\n";
 
-    //*testing*//
-    printf("data_t object test:  newMessage.string = %s\n", newMessage.string); //testing creation of a log message
-    printf("data_t object test:  newMessage.time = %ld\n", newMessage.time); //testing creation of a log message
-    //*testing*//
 
     /*
      * call the addmsg() function and pass newly created log message data_t-type object struct into it as argument
      * so it can be added to a log_t queue linked list node as the data_t item member
      */
 
-    if (addmsg(newMessage) == -1) {
+
+    data_t newMessage1 = createLogMessageForNode();
+    if (addmsg(newMessage1, argv[0]) == -1) {
         perror("Memory request is unable to be made.\n");
         exit(1);
     }
 
-
-    //LOG OBJECT AND STRING OUTPUT MESSAGE
-    data_t newMessage2; //new log message object; this will eventually be passed to the addmsg() function
-    time(&newMessage2.time); //initialize the .time member variable of log message data_t type structure object
-    printf("time in seconds = %ld\n", newMessage2.time);//test data
-
-
-    newMessage2.string = "I am not sure how to move the printf() log messages from above into this item.string pointer...#2..\n";
-
-    //*testing*//
-    printf("data_t object test:  newMessage.string = %s\n", newMessage2.string); //testing creation of a log message
-    printf("data_t object test:  newMessage.time = %ld\n", newMessage2.time); //testing creation of a log message
-    //*testing*//
-
-
-    if (addmsg(newMessage2) == -1) {
+    data_t newMessage2 = createLogMessageForNode();
+    if (addmsg(newMessage2, argv[0]) == -1) {
         perror("Memory request is unable to be made.\n");
         exit(1);
     }
 
-
-    //LOG OBJECT AND STRING OUTPUT MESSAGE
-    data_t newMessage3; //new log message object; this will eventually be passed to the addmsg() function
-    time(&newMessage3.time); //initialize the .time member variable of log message data_t type structure object
-    printf("time in seconds = %ld\n", newMessage3.time);//test data
-
-
-    newMessage3.string = "I am not sure how to move the printf() log messages from above into this item.string pointer...#3..\n";
-
-    //*testing*//
-    printf("data_t object test:  newMessage.string = %s\n", newMessage3.string); //testing creation of a log message
-    printf("data_t object test:  newMessage.time = %ld\n", newMessage3.time); //testing creation of a log message
-    //*testing*//
-
-
-    if (addmsg(newMessage3) == -1) {
+    data_t newMessage3 = createLogMessageForNode();
+    if (addmsg(newMessage3, argv[0]) == -1) {
         perror("Memory request is unable to be made.\n");
         exit(1);
     }
+
+    data_t newMessage4 = createLogMessageForNode();
+    if (addmsg(newMessage4, argv[0]) == -1) {
+        perror("Memory request is unable to be made.\n");
+        exit(1);
+    }
+
 
     printf("\nbreakpoint\n");
 
@@ -267,6 +333,7 @@ int main(int argc, char* argv[]) {
     savelog(logfileName);
 
     clearlog();
+
 
     //you have to run this program from the command line because of the argv[0] being passed to printf()
     return 0;

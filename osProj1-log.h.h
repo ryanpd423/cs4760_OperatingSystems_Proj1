@@ -12,10 +12,12 @@ typedef struct data_struct {
     char* string;  //The logging message
 } data_t;
 
-int addmsg(data_t data);
+int addmsg(data_t data, char*);
 void clearlog(void);
 char* getlog(void);
 int savelog(char* filename);
+char * msgTemplate(void);
+data_t createLogMessageForNode();
 
 
 

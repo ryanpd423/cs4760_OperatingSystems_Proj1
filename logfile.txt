@@ -6,3 +6,73 @@ I am not sure how to move the printf() log messages from above into this item.st
 I am not sure how to move the printf() log messages from above into this item.string pointer...#2..
 I am not sure how to move the printf() log messages from above into this item.string pointer...#3..
 
+w to move the printf() log messages from above into this item.string pointer.#1..
+I am not sure how to move the printf() log messages from above into this item.string pointer...#2..
+I am not sure how to move the printf() log messages from above into this item.string pointer...#3..
+I am not sure how to move the printf() log messages from above into this item.string pointer.#1..
+I am not sure how to move the printf() log messages from above into this item.string pointer...#2..
+I am not sure how to move the printf() log messages from above into this item.string pointer...#3..
+
+I am not sure how to move the printf() log messages from above into this item.string pointer.#1..
+I am not sure how to move the printf() log messages from above into this item.string pointer...#2..
+I am not sure how to move the printf() log messages from above into this item.string pointer...#3..
+
+I am not sure how to move the printf() log messages from above into this item.string pointer.#1..
+I am not sure how to move the printf() log messages from above into this item.string pointer...#2..
+I am not sure how to move the printf() log messages from above into this item.string pointer...#3..
+
+I am not sure how to move the printf() log messages from above into this item.string pointer.#1..
+I am not sure how to move the printf() log messages from above into this item.string pointer...#2..
+I am not sure how to move the printf() log messages from above into this item.string pointer...#3..
+
+I am not sure how to move the printf() log messages from above into this item.string pointer.#1..
+I am not sure how to move the printf() log messages from above into this item.string pointer...#2..
+I am not sure how to move the printf() log messages from above into this item.string pointer...#3..
+
+I am not sure how to move the printf() log messages from above into this item.string pointer.#1..
+I am not sure how to move the printf() log messages from above into this item.string pointer...#2..
+I am not sure how to move the printf() log messages from above into this item.string pointer...#3..
+
+I am not sure how to move the printf() log messages from above into this item.string pointer.#1..
+I am not sure how to move the printf() log messages from above into this item.string pointer...#2..
+I am not sure how to move the printf() log messages from above into this item.string pointer...#3..
+
+././cs4760-Proj1-mainDotC-Executable: Time:1486388209 Error:I am not sure how to move the printf() log messages from above into this item.string pointer.#1..././cs4760-Proj1-mainDotC-Executable: Time:1486388209 Error:I am not sure how to move the printf() log messages from above into this item.string pointer...#2..././cs4760-Proj1-mainDotC-Executable: Time:1486388209 Error:I am not sure how to move the printf() log messages from above into this item.string pointer...#3..
+././cs4760-Proj1-mainDotC-Executable: Time:1486388257 Error:I am not sure how to move the printf() log messages from above into this item.string pointer.#1..
+././cs4760-Proj1-mainDotC-Executable: Time:1486388257 Error:I am not sure how to move the printf() log messages from above into this item.string pointer...#2..
+././cs4760-Proj1-mainDotC-Executable: Time:1486388257 Error:I am not sure how to move the printf() log messages from above into this item.string pointer...#3..
+
+./cs4760-Proj1-mainDotC-Executable: Time:1486390335 Error:I am not sure how to move the printf() log messages from above into this item.string pointer.#1..
+ - - c'mon just pass a flag!./cs4760-Proj1-mainDotC-Executable: Time:1486390335 Error:I am not sure how to move the printf() log messages from above into this item.string pointer...#2..
+ - - c'mon just pass a flag!./cs4760-Proj1-mainDotC-Executable: Time:1486390335 Error:I am not sure how to move the printf() log messages from above into this item.string pointer...#3..
+ - - c'mon just pass a flag!
+./cs4760-Proj1-mainDotC-Executable: Time:1486390437 Error: - - c'mon just pass a flag!./cs4760-Proj1-mainDotC-Executable: Time:1486390437 Error: - - c'mon just pass a flag!./cs4760-Proj1-mainDotC-Executable: Time:1486390437 Error:I am not sure how to move the printf() log messages from above into this item.string pointer...#3..
+ - - c'mon just pass a flag!
+./cs4760-Proj1-mainDotC-Executable: Time:1486390460 Error:
+ - - c'mon just pass a flag!./cs4760-Proj1-mainDotC-Executable: Time:1486390460 Error:
+ - - c'mon just pass a flag!./cs4760-Proj1-mainDotC-Executable: Time:1486390460 Error:I am not sure how to move the printf() log messages from above into this item.string pointer...#3..
+ - - c'mon just pass a flag!
+./cs4760-Proj1-mainDotC-Executable: Time:1486390890 Error:
+ - - x changed to 888 - - Dothraki Horde!./cs4760-Proj1-mainDotC-Executable: Time:1486390890 Error:
+ - - x changed to 888 - - Dothraki Horde!./cs4760-Proj1-mainDotC-Executable: Time:1486390890 Error:I am not sure how to move the printf() log messages from above into this item.string pointer...#3..
+ - - x changed to 888 - - Dothraki Horde!
+./cs4760-Proj1-mainDotC-Executable: Time:1486390948 Error:
+ - - x changed to 999 - - Dothraki Horde./cs4760-Proj1-mainDotC-Executable: Time:1486390948 Error:
+ - - x changed to 999 - - Dothraki Horde./cs4760-Proj1-mainDotC-Executable: Time:1486390948 Error:I am not sure how to move the printf() log messages from above into this item.string pointer...#3..
+ - - x changed to 999 - - Dothraki Horde
+./cs4760-Proj1-mainDotC-Executable: Time:1486391378 Error:./cs4760-Proj1-mainDotC-Executable: Time:1486391378 Error:./cs4760-Proj1-mainDotC-Executable: Time:1486391378 Error:I am not sure how to move the printf() log messages from above into this item.string pointer...#3..
+./cs4760-Proj1-mainDotC-Executable: Time:1486391536 Error:./cs4760-Proj1-mainDotC-Executable: Time:1486391536 Error:./cs4760-Proj1-mainDotC-Executable: Time:1486391536 Error:I am not sure how to move the printf() log messages from above into this item.string pointer...#3..
+./cs4760-Proj1-mainDotC-Executable: Time:1486391981 Error:./cs4760-Proj1-mainDotC-Executable: Time:1486391981 Error:./cs4760-Proj1-mainDotC-Executable: Time:1486391981 Error:I am not sure how to move the printf() log messages from above into this item.string pointer...#3.../cs4760-Proj1-mainDotC-Executable: Time:1486391981 Error:(null
+./cs4760-Proj1-mainDotC-Executable: Time:1486392053 Error:./cs4760-Proj1-mainDotC-Executable: Time:1486392053 Error:./cs4760-Proj1-mainDotC-Executable: Time:1486392053 Error:I am not sure how to move the printf() log messages from above into this item.string pointer...#3.../cs4760-Proj1-mainDotC-Executable: Time:1486392053 Error:(null
+./cs4760-Proj1-mainDotC-Executable: Time:1486392424 Error:c'mon atleast throw a fla./cs4760-Proj1-mainDotC-Executable: Time:1486392424 Error:c'mon atleast throw a fla./cs4760-Proj1-mainDotC-Executable: Time:1486392424 Error:c'mon atleast throw a fla./cs4760-Proj1-mainDotC-Executable: Time:1486392424 Error:c'mon atleast throw a fla
+ainDotC-Executable: Time:1486392535 Error:c'mon atleast throw a flag./cs4760-Proj1-mainDotC-Executable: Time:1486392535 Error:c'mon atleast throw a flag./cs4760-Proj1-mainDotC-Executable: Time:1486392535 Error:c'mon atleast throw a flag./cs4760-Proj1-mainDotC-Executable: Time:1486392535 Error:c'mon atleast throw a flag./cs4760-Proj1-mainDotC-Executable: Time:1486392535 Error:c'mon atleast throw a flag./cs4760-Proj1-mainDotC-Executable: Time:1486392535 Error:c'mon atleast throw a flag./cs4760-Proj1-mainDotC-Executable: Time:1486392535 Error:c'mon atleast throw a flag./cs4760-Proj1-mainDotC-Executable: Time:1486392535 Error:c'mon atleast throw a flag
+./cs4760-Proj1-mainDotC-Executable: Time:1486392695 Error: - - x changed to %d - - Dothraki Horde! - - x changed to 999 - - Dothraki Horde./cs4760-Proj1-mainDotC-Executable: Time:1486392695 Error: - - x changed to %d - - Dothraki Horde! - - x changed to 999 - - Dothraki Horde./cs4760-Proj1-mainDotC-Executable: Time:1486392695 Error: - - x changed to %d - - Dothraki Horde! - - x changed to 999 - - Dothraki Horde./cs4760-Proj1-mainDotC-Executable: Time:1486392695 Error: - - x changed to %d - - Dothraki Horde! - - x changed to 999 - - Dothraki Horde
+./cs4760-Proj1-mainDotC-Executable: Time:1486392823 Error:- - Dothraki Horde! - - x changed to 99./cs4760-Proj1-mainDotC-Executable: Time:1486392823 Error:- - Dothraki Horde! - - x changed to 99./cs4760-Proj1-mainDotC-Executable: Time:1486392823 Error:- - Dothraki Horde! - - x changed to 99./cs4760-Proj1-mainDotC-Executable: Time:1486392823 Error:- - Dothraki Horde! - - x changed to 99
+./cs4760-Proj1-mainDotC-Executable: Time:1486392956 Error:- - Dothraki Horde! - - x changed to 99./cs4760-Proj1-mainDotC-Executable: Time:1486392956 Error:- - Dothraki Horde! - - x changed to 99./cs4760-Proj1-mainDotC-Executable: Time:1486392956 Error:- - Dothraki Horde! - - x changed to 99./cs4760-Proj1-mainDotC-Executable: Time:1486392956 Error:- - Dothraki Horde! - - x changed to 99
+./cs4760-Proj1-mainDotC-Executable: Time:1486394001 Error:- - Dothraki Horde! - - x changed to 999000./cs4760-Proj1-mainDotC-Executable: Time:1486394001 Error:- - Dothraki Horde! - - x changed to 999000./cs4760-Proj1-mainDotC-Executable: Time:1486394001 Error:- - Dothraki Horde! - - x changed to 999000./cs4760-Proj1-mainDotC-Executable: Time:1486394001 Error:- - Dothraki Horde! - - x changed to 999000
+./cs4760-Proj1-mainDotC-Executable: Time:1486394073 Error:- - Dothraki Horde!
+ - - x changed to 0./cs4760-Proj1-mainDotC-Executable: Time:1486394073 Error:- - Dothraki Horde!
+ - - x changed to 0./cs4760-Proj1-mainDotC-Executable: Time:1486394073 Error:- - Dothraki Horde!
+ - - x changed to 0./cs4760-Proj1-mainDotC-Executable: Time:1486394073 Error:- - Dothraki Horde!
+ - - x changed to 0
+./cs4760-Proj1-mainDotC-Executable: Time:1486394125 Error:- - Dothraki Horde! - - x changed to 0./cs4760-Proj1-mainDotC-Executable: Time:1486394125 Error:- - Dothraki Horde! - - x changed to 0./cs4760-Proj1-mainDotC-Executable: Time:1486394125 Error:- - Dothraki Horde! - - x changed to 0./cs4760-Proj1-mainDotC-Executable: Time:1486394125 Error:- - Dothraki Horde! - - x changed to 0
