@@ -1,0 +1,13 @@
+
+/Users/Ryanpd423/Documents/Users/Ryanpd423/Documents/CLionCProjects/cs4760-OperatingSystems-Proj1/cmake-build-debug/cs4760_OperatingSystems_Proj1: Time:1486395698 Error:c'mon atleast throw a flag
+/Users/Ryanpd423/Documents/Users/Ryanpd423/Documents/CLionCProjects/cs4760-OperatingSystems-Proj1/cmake-build-debug/cs4760_OperatingSystems_Proj1: Time:1486395698 Error:c'mon atleast throw a flag
+/Users/Ryanpd423/Documents/Users/Ryanpd423/Documents/CLionCProjects/cs4760-OperatingSystems-Proj1/cmake-build-debug/cs4760_OperatingSystems_Proj1: Time:1486395698 Error:c'mon atleast throw a flag
+/Users/Ryanpd423/Documents/Users/Ryanpd423/Documents/CLionCProjects/cs4760-OperatingSystems-Proj1/cmake-build-debug/cs4760_OperatingSystems_Proj1: Time:1486395698 Error:c'mon atleast throw a flag
+
+/Users/Ryanpd423/Documents/Users/Ryanpd423/Documents/CLionCProjects/cs4760-OperatingSystems-Proj1/cmake-build-debug/cs4760_OperatingSystems_Proj1: Time:1486413874 Error:c'mon atleast throw a flag
+/Users/Ryanpd423/Documents/Users/Ryanpd423/Documents/CLionCProjects/cs4760-OperatingSystems-Proj1/cmake-build-debug/cs4760_OperatingSystems_Proj1: Time:1486413874 Error:c'mon atleast throw a flag
+
+/Users/Ryanpd423/Documents/Users/Ryanpd423/Documents/CLionCProjects/cs4760-OperatingSystems-Proj1/cmake-build-debug/cs4760_OperatingSystems_Proj1: Time:1486413874 Error:c'mon atleast throw a flag
+/Users/Ryanpd423/Documents/Users/Ryanpd423/Documents/CLionCProjects/cs4760-OperatingSystems-Proj1/cmake-build-debug/cs4760_OperatingSystems_Proj1: Time:1486413874 Error:c'mon atleast throw a flag
+/Users/Ryanpd423/Documents/Users/Ryanpd423/Documents/CLionCProjects/cs4760-OperatingSystems-Proj1/cmake-build-debug/cs4760_OperatingSystems_Proj1: Time:1486413874 Error:c'mon atleast throw a flag
+/Users/Ryanpd423/Documents/Users/Ryanpd423/Documents/CLionCProjects/cs4760-OperatingSystems-Proj1/cmake-build-debug/cs4760_OperatingSystems_Proj1: Time:1486413874 Error:c'mon atleast throw a flag

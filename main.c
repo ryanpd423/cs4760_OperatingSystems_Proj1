@@ -13,59 +13,39 @@ typedef struct list_struct {
     struct list_struct* next; //points to the next node (list_struct / log_t) in our linked-list implemented queue
 } log_t;
 
+
+
 static log_t* headptr = NULL; //front ptr; points to the first inserted node in the queue
 static log_t* tailptr = NULL; //rear ptr; points to the last inserted node in the queue
-static int h_flag = 0;
 static int n_flag = 0;
 static int l_flag = 0;
 static int x = 42;
 static char* logfileName = "logfile.txt";
-static char* hFlagString = "describes the supported command line argument options.\nThe '-n' flag can change a param, x, from 42 to any val.\nThe '-l' flag can change the name of the log file from logfile.txt to any custom string\n";
 static int dataStringEnum = 0;
 
 char* msgTemplate(){
 
     char* returningMsgTemplate;
 
-    if (n_flag == 0 && l_flag == 0 && h_flag == 0){
+    if (n_flag == 0 && l_flag == 0){
         char *hMessageTemplate = "\n%s: Time:%lu Error:%s\n";
         dataStringEnum = 1;
         returningMsgTemplate = hMessageTemplate;
     }
-    else if (n_flag == 1 && l_flag == 0 && h_flag == 0){
+    else if (n_flag == 1 && l_flag == 0){
         char* nMessageTemplate = "\n%s: Time:%lu Error:%s - - x changed to %d\n";
         dataStringEnum = 2;
         returningMsgTemplate = nMessageTemplate;
     }
-    else if (n_flag == 1 && l_flag == 1 && h_flag == 0){
+    else if (n_flag == 1 && l_flag == 1){
         char* nAndlMessageTemplate = "\n%s: Time:%lu Error:%s - - x changed to %d and logfile.txt name changed to %s\n";
         dataStringEnum = 3;
         returningMsgTemplate = nAndlMessageTemplate;
     }
-    else if (n_flag == 1 && l_flag == 1 && h_flag == 1){
-        char* nAndlAndhMessageTemplate = "\n%s: Time:%lu Error:%s - - x changed to %d and logfile.txt name changed to %s...the -h flag: %s\n";
-        dataStringEnum = 4;
-        returningMsgTemplate = nAndlAndhMessageTemplate;
-    }
-    else if (n_flag == 0 && l_flag == 1 && h_flag == 0){
+    else if (n_flag == 0 && l_flag == 1){
         char* lMessageTemplate = "\n%s: Time:%lu Error:%s - - logfile.txt name changed to %s\n";
-        dataStringEnum = 5;
+        dataStringEnum = 4;
         returningMsgTemplate = lMessageTemplate;
-    }
-    else if (n_flag == 0 && l_flag == 1 && h_flag == 1){
-        char* lAndhMessageTemplate = "\n%s: Time:%lu Error:%s - - logfile.txt name changed to %s...the -h flag: %s\n";
-        dataStringEnum = 6;
-        returningMsgTemplate = lAndhMessageTemplate;
-    }
-    else if (n_flag == 0 && l_flag == 0 && h_flag == 1){
-        char* hMessageTemplate = "\n%s: Time:%lu Error:%s...the -h flag: %s\n";
-        dataStringEnum = 7;
-        returningMsgTemplate = hMessageTemplate;
-    }
-    else if (n_flag == 1 && l_flag == 0 && h_flag == 1){
-        char* nAndhMessageTemplate = "\n%s: Time:%lu Error:%s - - x changed to %d...the -h flag: %s\n";
-        dataStringEnum = 8;
-        returningMsgTemplate = nAndhMessageTemplate;
     }
 
     return returningMsgTemplate;
@@ -79,7 +59,6 @@ data_t createLogMessageForNode(){
 
 
 int addmsg(data_t data, char* argv0) {
-
     /*
      * If successful, addmsg will return 0.
      *
@@ -87,7 +66,6 @@ int addmsg(data_t data, char* argv0) {
      *
      * Sets errno on failure
      */
-
     log_t* newNode;
     size_t nodesize;
     char* messageTemplate = msgTemplate();
@@ -97,7 +75,7 @@ int addmsg(data_t data, char* argv0) {
         data.string = "c'mon atleast throw a flag";
     }
     else if (dataStringEnum == 2){
-        data.string = "- - Dothraki Horde!";
+        data.string = "- - Winter is coming!";
     }
     else if (dataStringEnum == 3){
         data.string = " - - House Lannister!";
@@ -105,25 +83,12 @@ int addmsg(data_t data, char* argv0) {
     else if (dataStringEnum == 4){
         data.string = "- - House Stark!";
     }
-    else if (dataStringEnum == 5){
-        data.string = " - - The King in the North!";
-    }
-    else if (dataStringEnum == 6){
-        data.string =  "- - House Stark!";
-    }
-    else if (dataStringEnum == 7){
-        data.string = "- - House Greyjoy!";
-    }
-    else if (dataStringEnum == 8){
-        data.string = " - - Burn in hell Ramsey Bolton...Winter is Coming!";
-    }
-
     /*
      * snprintf is a little bit of a hack; you have to pass it data.string as its fourth argument or it doesn't work for some reason
      * I honestly just started guessing and testing and it worked...need an explanation why though...
      */
     //get message size
-    int logStringSize = snprintf(NULL, 0, messageTemplate, data.string, data.time, argv0, x, logfileName, hFlagString); //measures the logString
+    int logStringSize = snprintf(NULL, 0, messageTemplate, data.string, data.time, argv0, x, logfileName); //measures the logString
     printf("size of logString is %d\n", logStringSize);//test logString size
 
     //include the size of the node + the logString + the null terminator
@@ -132,11 +97,10 @@ int addmsg(data_t data, char* argv0) {
         perror("Memory request is unable to be made.\n");
         return (-1);
     }
-
     newNode->item.time = data.time;
     newNode->item.string = (char*) (newNode+1); //newNode + 1 is pointer arithmetic that casts the additional allocated memory past the initial amount of the contiguous log_t-sized memory block to the newNode->item.string variable logMessage string that needs memory right after that log_t block of memory (ex: think log_t is from mem-cell 100 to mem-cell 150, and the memory calculated from the snprintf (int logString) needs mem-cell 151 to ?...to get to mem-cell 151 from mem-cell 100 we need to perform pointer arithmetic and traverse the heap memory block by the amount of log_t so we can go from mem-cell 100 to mem-cell 151 and that portion can now start reading in data from newNode->item.string...then we have to recast it as char* memory (from log_t* memory)
     newNode->next = NULL; //cap the log_t* next pointer to point to location NULL/0 for now...it's not being used here anyways...at least not until getlog() is called
-    snprintf(newNode->item.string,logStringSize, messageTemplate, argv0, data.time, data.string, x, logfileName, hFlagString);
+    snprintf(newNode->item.string,logStringSize, messageTemplate, argv0, data.time, data.string, x, logfileName);
     newNode->next = NULL; //cap your pointers before you use them
     if(headptr == NULL)
         headptr = newNode; //
@@ -159,10 +123,9 @@ void clearlog(void) {
         logMessages = logMessages->next;
         free(logMessages);
         count++;
-        printf("realease mem%d\n", count);
+        printf("release mem%d\n", count);
     }
 }
-
 char* getlog(void) {
 /*
  * Allocates enough space for a string containing the entire log, copies that
@@ -245,7 +208,15 @@ int main(int argc, char* argv[]) {
 
         switch(c) {
             case 'h':
-                h_flag = 1;
+                printf("The '-h' flag is a help option one can pass as an argument through the CLI.\n"
+                "The '-n x' flag is an optional argument flag that can be passed through the CLI\n"
+                               "that allows the user to specify the value of a program param in place of x;\n"
+                               "x will be equal to 42 by default.\n"
+                               "For example: -n 12345 would set the value of the program param equal to 12345 instead of 42.\n"
+                "The '-l filename' flag allows the user to specify the name of the logfile that\n"
+                               "that stores the logging messages that aggregate each time the program is executed;\n"
+                               "the logfile name is logfile.txt by default.\n"
+                               "For example: -l catdog.txt would create .txt file and save the log messages to it.\n");
                 break;
             case 'n':
                 x = atoi(optarg);
@@ -266,7 +237,6 @@ int main(int argc, char* argv[]) {
                 break;
             }
         }
-
 /*
 //LOG OBJECT AND STRING OUTPUT MESSAGE
     data_t newMessage; //new log message object; this will eventually be passed to the addmsg() function
@@ -290,13 +260,10 @@ int main(int argc, char* argv[]) {
     }
 */
 
-
-
     /*
      * call the addmsg() function and pass newly created log message data_t-type object struct into it as argument
      * so it can be added to a log_t queue linked list node as the data_t item member
      */
-
 
     data_t newMessage1 = createLogMessageForNode();
     if (addmsg(newMessage1, argv[0]) == -1) {
@@ -310,6 +277,7 @@ int main(int argc, char* argv[]) {
         exit(1);
     }
 
+
     data_t newMessage3 = createLogMessageForNode();
     if (addmsg(newMessage3, argv[0]) == -1) {
         perror("Memory request is unable to be made.\n");
@@ -322,7 +290,6 @@ int main(int argc, char* argv[]) {
         exit(1);
     }
 
-
     printf("\nbreakpoint\n");
 
     //testing getlog()
@@ -330,9 +297,8 @@ int main(int argc, char* argv[]) {
     printf("%s\n", printLog);
     printf("size of printlog = %lu\n", sizeof(printLog));
 
-    savelog(logfileName);
-
-    clearlog();
+    savelog(logfileName); //saves the log to the logfileName
+    clearlog(); //frees the memory ===> not sure if this is working along with my realloc in my getlog()
 
 
     //you have to run this program from the command line because of the argv[0] being passed to printf()

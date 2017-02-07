@@ -1,0 +1,7 @@
+
+./cs4760-Proj1-mainDotC-Executable: Time:1486413580 Error: - - House Lannister! - - x changed to 123 and logfile.txt name changed to catdogsandcat.txt
+./cs4760-Proj1-mainDotC-Executable: Time:1486413580 Error: - - House Lannister! - - x changed to 123 and logfile.txt name changed to catdogsandcat.txt
+
+./cs4760-Proj1-mainDotC-Executable: Time:1486413580 Error: - - House Lannister! - - x changed to 123 and logfile.txt name changed to catdogsandcat.txt
+./cs4760-Proj1-mainDotC-Executable: Time:1486413580 Error: - - House Lannister! - - x changed to 123 and logfile.txt name changed to catdogsandcat.txt
+./cs4760-Proj1-mainDotC-Executable: Time:1486413580 Error: - - House Lannister! - - x changed to 123 and logfile.txt name changed to catdogsandcat.txt
